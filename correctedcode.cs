@@ -7,21 +7,24 @@ class Program
     static void Main()
     {
         Console.OutputEncoding = Encoding.UTF8;
+        Console.ForegroundColor = ConsoleColor.White; // Весь текст буде білим
         int choice = 0; // Початковий вибір
-
         string[] menuOptions = new string[]
         {
-            "Згенерувати пароль та зберегти на робочий стіл",
-            "Згенерувати пароль вручну та зберегти на робочий стіл",
-            "Відображення паролю в консолі",
-            "Відображення паролю в консолі (ручний ввід)",
-            "Вийти"
+            "1.Згенерувати пароль та зберегти на робочий стіл",
+            "2.Згенерувати пароль вручну та зберегти на робочий стіл",
+            "3.Відображення паролю в консолі",
+            "4.Відображення паролю в консолі (ручний ввід)",
+            "5.Вийти"
         };
 
+        Console.BackgroundColor = ConsoleColor.DarkYellow; // Фон консолі
+        Console.Clear();
+        Console.SetWindowSize(80, 25); // Розмір консолі
         do
         {
-            Console.Clear();
             DisplayMenu(menuOptions, choice);
+
             var key = Console.ReadKey().Key;
 
             switch (key)
@@ -44,16 +47,25 @@ class Program
 
     static void DisplayMenu(string[] menuOptions, int selected)
     {
+        Console.Clear();
+        // Весь текст меню білий за винятком вибраного пункту
+        int centerX = Console.WindowWidth / 2 - 5;
+        Console.SetCursorPosition(centerX, Console.CursorTop);
+
         Console.WriteLine("Меню:");
+
         for (int i = 0; i < menuOptions.Length; i++)
         {
             if (i == selected)
             {
-                Console.WriteLine($"* {menuOptions[i]}");
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine(menuOptions[i]);
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.White; // Встановлення білого кольору після скидання
             }
             else
             {
-                Console.WriteLine($"  {menuOptions[i]}");
+                Console.WriteLine(menuOptions[i]);
             }
         }
     }
@@ -84,7 +96,7 @@ class Program
         Console.WriteLine("Натисніть будь-яку клавішу для продовження.");
         Console.ReadKey();
     }
-
+    
     static void GenerateAndSavePasswords()
     {
         Console.Write("Введіть ім'я файлу для збереження: ");
